@@ -5,57 +5,64 @@
 \hypersetup{pageanchor=false}
 
 
-% O preambulo deve conter tipo do trabalho, objetivo, nome da instituição e a área de concentração.
-\preambulo
-{%
-   \imprimirtipotrabalho~\ifnotdefined\tcc{submetida}{submetido} ao \imprimirprograma~da \imprimirinstituicao~para a obtenção do Grau de \imprimirformacao.
-}
-
 % ELEMENTOS PRÉ-TEXTUAIS
 \ifforcedinclude\else
     % pretextual settings
+    \PRIVATEbookmarkthis{Capa}
+    \addtotextpreliminarycontent{Capa}
     \pretextual
 
     % Capa
     % \includepdf{pictures/FrenteCapaUFSC.pdf}
+    % https://tex.stackexchange.com/questions/227711/blank-page-after-titlingpage
+    \advisor{}{\AtBeginShipoutNext{\AtBeginShipoutNext{\AtBeginShipoutDiscard}}}
     \imprimircapa
+
+    % Custom list throw LaTeX Error: Command \mycustomfiction already defined?
+    % https://tex.stackexchange.com/questions/388489/custom-list-throw-latex-error-command-mycustomfiction-already-defined/
+    \advisor{}{%
+        % Manually add the `\textpreliminarycontents` to the Table of Contents here
+        % to keep the hyper link pointing to the beginning of the page, instead of
+        % the beginning of `\textpreliminarycontents`
+
+        % When do I need to invoke \phantomsection?
+        % https://tex.stackexchange.com/questions/44088/when-do-i-need-to-invoke-phantomsection
+        \phantomsection
+        \addcontentsline{toc}{chapter}{\mytextpreliminarylistname}
+
+        \begin{KeepFromToc}
+            \textpreliminarycontents
+        \end{KeepFromToc}
+
+        \clearpage
+    }
+
+    \PRIVATEbookmarkthis{Contracapa}
+    \addtotextpreliminarycontent{Contracapa}
 
     % Folha de rosto (o * indica que haverá a ficha bibliográfica)
     \imprimirfolhaderosto*
+
+    % Inserir a ficha bibliografica
+    %
+    % Isto é um exemplo de Ficha Catalográfica, ou ``Dados internacionais de
+    % catalogação-na-publicação''. Você pode utilizar este modelo como referência.
+    % Porém, provavelmente a biblioteca da sua universidade lhe fornecerá um PDF
+    % com a ficha catalográfica definitiva após a defesa do trabalho. Quando estiver
+    % com o documento, salve-o como PDF no diretório do seu projeto e substitua todo
+    % o conteúdo de implementação deste arquivo pelo comando abaixo:
+    \PRIVATEbookmarkthis{Ficha Catalográfica}
+    \addtotextpreliminarycontent{Ficha Catalográfica}
 \fi
 
-% Inserir a ficha bibliografica
-%
-% Isto é um exemplo de Ficha Catalográfica, ou ``Dados internacionais de
-% catalogação-na-publicação''. Você pode utilizar este modelo como referência.
-% Porém, provavelmente a biblioteca da sua universidade lhe fornecerá um PDF
-% com a ficha catalográfica definitiva após a defesa do trabalho. Quando estiver
-% com o documento, salve-o como PDF no diretório do seu projeto e substitua todo
-% o conteúdo de implementação deste arquivo pelo comando abaixo:
 \include{beforetext/fichacatalografica}
 \ifforcedinclude\else\cleardoublepage\fi
 
-% Custom list throw LaTeX Error: Command \mycustomfiction already defined?
-% https://tex.stackexchange.com/questions/388489/custom-list-throw-latex-error-command-mycustomfiction-already-defined/
-% \ifforcedinclude\else
-    % Manually add the `\textpreliminarycontents` to the Table of Contents here
-    % to keep the hyper link pointing to the beginning of the page, instead of
-    % the beginning of `\textpreliminarycontents`
-    %
-    % When do I need to invoke \phantomsection?
-    % https://tex.stackexchange.com/questions/44088/when-do-i-need-to-invoke-phantomsection
-    % \phantomsection
-    % \addcontentsline{toc}{chapter}{\mytextpreliminarylistname}
-
-    % \begin{KeepFromToc}
-        % \textpreliminarycontents
-    % \end{KeepFromToc}
-% \fi
 
 % Inserir errata
 
-% Inserir folha de aprovação. Isto é um exemplo de Folha de aprovação, elemento obrigatório da 
-% NBR 14724/2011 (seção 4.2.1.3). Você pode utilizar este modelo até a aprovação do trabalho. 
+% Inserir folha de aprovação. Isto é um exemplo de Folha de aprovação, elemento obrigatório da
+% NBR 14724/2011 (seção 4.2.1.3). Você pode utilizar este modelo até a aprovação do trabalho.
 % Após isso, substitua todo o conteúdo deste arquivo por uma imagem da página assinada pela banca com o comando  abaixo:
 
 \ifforcedinclude\else\cleardoublepage\fi
@@ -65,7 +72,7 @@
 
 % Dedicatória
 \ifforcedinclude\else\cleardoublepage\fi
-\ifforcedinclude\else\input{beforetext/dedicatoria}\fi
+\ifforcedinclude\else\input{beforetext/dedicatoria.tex}\fi
 
 % Agradecimentos
 \ifforcedinclude\else\cleardoublepage\fi
@@ -86,31 +93,31 @@
 % Some tables of contents
 \ifforcedinclude\else
     % inserir lista de figuras
-    % Ao contrario da norma abnt-6027-2012, que as figuras estejam listadas na Lista de 
-    % Ilustrações,  a UFSC pede que as figuras estejam na Lista de Figuras. 
-    \renewcommand{\listfigurename}{Lista de Figuras}
     \ifforcedinclude\else\cleardoublepage\fi
-    \addtotextpreliminarycontent{\lang{List of Figures}{Lista de Figuras}}
+    \addtotextpreliminarycontent{\listfigurename}
     \pdfbookmark[0]{\listfigurename}{lof}
     \listoffigures*
 
-    % inserir lista de quados
+    % inserir lista de quadros
     \ifforcedinclude\else\cleardoublepage\fi
-    \addtotextpreliminarycontent{\lang{List of Data Frames}{Lista de Quadros}}
-    \pdfbookmark[0]{Lista de Quadros}{loq}
+    \addtotextpreliminarycontent{\listofquadrosname}
+    \pdfbookmark[0]{\listofquadrosname}{loq}
     \listofquadros*
 
     % inserir lista de tabelas
     \ifforcedinclude\else\cleardoublepage\fi
-    \addtotextpreliminarycontent{\lang{List of Tables}{Lista de Tabelas}}
+    \addtotextpreliminarycontent{\listtablename}
     \pdfbookmark[0]{\listtablename}{lot}
     \listoftables*
 
-    % inserir códigos fonte
+    % inserir códigos fonte (List of Listings `lol`)
+    % https://tex.stackexchange.com/questions/511519/latex-keeps-showing-minted-environment-as-figures-instead-of-listening/511579#511579
     \ifforcedinclude\else\cleardoublepage\fi
-    \addtotextpreliminarycontent{\lang{List of Source Codes}{Lista de Códigos Fonte}}
-    \pdfbookmark[0]{\lstlistingname}{lol}
+    \addtotextpreliminarycontent{\lstlistlistingname}
+    \pdfbookmark[0]{\lstlistlistingname}{lol}
+    {\renewcommand{\cftfigurename}{\listingname\space}
     \lstlistoflistings*
+    }
 \fi
 
 
@@ -122,11 +129,10 @@
 \ifforcedinclude\else\cleardoublepage\fi
 \include{beforetext/simbolos}
 
-% Add the table of contents to the brief table of contents
-\addtotextpreliminarycontent{\lang{Table of Contents}{Sumário}}
-
 % How to remove the self-reference of the ToC from the ToC?
 % https://tex.stackexchange.com/questions/10943/how-to-remove-the-self-reference-of-the-toc-from-the-toc
+\ifforcedinclude\else\cleardoublepage\fi
+
 \begin{KeepFromToc}
     \pdfbookmark[0]{\contentsname}{toc}
 
@@ -158,6 +164,8 @@
         % https://tex.stackexchange.com/questions/179506/disable-colorlinks-locally-or-just-for-the-toc
         \hypersetup{hidelinks}
 
+        % Add the table of contents to the brief table of contents
+        \addtotextpreliminarycontent{\contentsname}
         \tableofcontents
     }
 
