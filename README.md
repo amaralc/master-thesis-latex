@@ -181,21 +181,28 @@ $ make help
               https://github.com/clarkwang/passh
 
        You can define the following parameters:
-       1. LATEXPASSWORD  - the remote machine SHH password
-       2. LATEXADDRESS   - the remote machine 'user@ipaddress'
-       3. rules          - the rules/arguments to pass to the remote invocation of make
-       4. args           - arguments to pass to the rsync program
-       5. dir            - the directory to put the files, defaults to '~/LatexBuild'
+       4. args - arguments to pass to the rsync program, see 'rsync --help'
+       3. rules - the rules/arguments to pass to the remote invocation of make
+       5. UFSCTHESISX_ROOT_DIRECTORY  - the directory to put the files, defaults to '~/LatexBuild'
+       1. UFSCTHESISX_REMOTE_PASSWORD - the remote machine SHH password, defaults to 'admin123'
+       2. UFSCTHESISX_REMOTE_ADDRESS  - the remote machine 'user@ipaddress', defaults to 'linux@192.168.0.222'
 
      Example usage for Linux:
-       make remote LATEXPASSWORD=123 LATEXADDRESS=linux@192.168.0.222 rules=latex &&
-                delete=1 dir=~/Downloads/Thesis
+       make remote rules="latex debug=1" &&
+              debug=1 &&
+              args="--delete"
+              UFSCTHESISX_ROOT_DIRECTORY=~/Downloads/Thesis &&
+              UFSCTHESISX_REMOTE_ADDRESS=linux@192.168.0.222 &&
+              UFSCTHESISX_REMOTE_PASSWORD=123 &&
 
      Example usage for Windows:
-       set "LATEXPASSWORD=123" && set "LATEXADDRESS=linux@192.168.0.222" &&
-                set "rules=latex" && set "delete=1" &&
-                set "dir=~/Downloads/Thesis" &&
-                make remote
+       set "rules=latex debug=1" &&
+              set "debug=1" &&
+              set "args=--delete" &&
+              set "UFSCTHESISX_ROOT_DIRECTORY=~/Downloads/Thesis" &&
+              set "UFSCTHESISX_REMOTE_ADDRESS=linux@192.168.0.222" &&
+              set "UFSCTHESISX_REMOTE_PASSWORD=123" &&
+              make remote
 ```
 
 Caso você tenha problemas,
@@ -252,6 +259,7 @@ Copyright (c) 2012-2014 by abnTeX2 group at http://abntex2.googlecode.com/
 Copyright (c) 2014-2015 Mateus Dubiela Oliveira
 Copyright (c) 2015-2016 Adriano Ruseler
 Copyright (c) 2017-2018 Evandro Coan, Luiz Rafael dos Santos
+Copyright (c) 2019-2019 Alisson Lopes Furlani
 
 É concedida permissão, gratuitamente, a qualquer pessoa que obtenha uma cópia deste modelo e
 software e arquivos de documentação associados (o "Software"), para ter estes arquivos com os

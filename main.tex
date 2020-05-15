@@ -1,5 +1,5 @@
 %https://github.com/SublimeText/LaTeXTools/issues/1439
-%!TEX output_directory=setup/cache
+%!TEX output_directory=latexcache
 
 % You can build this using the command:
 % latexmk -pdf -jobname=output -output-directory=cache -aux-directory=cache -pdflatex="pdflatex -interaction=nonstopmode" -use-make main.tex
@@ -37,6 +37,8 @@
 \newcommand{\advisor}[2]{\ifadvisor#1\else#2\fi}
 
 % https://tex.stackexchange.com/questions/385895/how-to-make-passoptionstopackage-add-the-option-as-the-last
+% https://tex.stackexchange.com/questions/484400/changing-the-cleveref-package-language-conjunction-definition
+% https://tex.stackexchange.com/questions/516058/why-isnt-my-biblatex-language-changing-when-passing-the-language-on-my-document
 \ifenglish
     \PassOptionsToPackage{brazil,main=english,spanish,french}{babel}
 \else
@@ -56,7 +58,7 @@
 % Uncomment the following line if you want to use other biblatex settings
 % \PassOptionsToPackage{style=numeric,repeatfields=true,backend=biber,backref=true,citecounter=true}{biblatex}
 \documentclass[
-\lang{english}{brazilian,brazil},
+\lang{english}{brazilian,brazil}, % https://tex.stackexchange.com/questions/484400/changing-the-cleveref-package-language-conjunction-definition
 12pt, % Padrão UFSC para versão final
 a4paper, % Padrão UFSC para versão final
 twoside, % Impressão nos dois lados da folha
@@ -68,12 +70,15 @@ section=TITLE, % Título de seções em caixa alta
 % http://tug.ctan.org/tex-archive/macros/latex/contrib/cleveref/cleveref.pdf
 \addbibresource{aftertext/references.bib}
 
+% https://www.overleaf.com/learn/latex/Inserting_Images
+\graphicspath{{pictures/}}
+
 % FIXME: Preencha com seus dados
 \autor{\brazilword{Escreva aqui o Nome completo do Autor ou da Autora}}
 \titulo{\lang{Work Title\protect\\Could be break into two lines}{Título do trabalho\protect\\Pode ser Quebrado em duas linhas}}
 
 % FIXME: Se houver subtítulo, descomente a linha abaixo
-% \subtitulo{\lang{Subtitle}{Subtítulo}}
+\subtitulo{\lang{Subtitle}{Subtítulo}}
 
 % FIXME: Siglas para grau de formação Dr./Dra., Me./Ma, Bel. Bela. (inglês: PhD., MSc., Bs.)
 \orientador[\lang{Supervisor}{Orientador(a)}]{\brazilword{Nome completo do Orientador(a)}, \lang{Phd.}{Dr.}}
@@ -155,8 +160,8 @@ section=TITLE, % Título de seções em caixa alta
     pdfsubject={Thesis' Abstract},
     pdfcreator={LaTeX with abnTeX2 for UFSC},
     pdftitle={\imprimirtitulo},
-    pdfauthor={\imprimirautor},%
-    pdfkeywords={\lang{\palavraschaveinglessemitem}{\palavraschaveportuguessemitem}},%
+    pdfauthor={\imprimirautor},
+    pdfkeywords={\lang{\palavraschaveinglessemitem}{\palavraschaveportuguessemitem}},
 }
 
 % Altere o arquivo 'settings.tex' para incluir customizações de aparência da sua tese
@@ -196,17 +201,6 @@ section=TITLE, % Título de seções em caixa alta
 % \forcedincludetrue
 
 
-% https://tex.stackexchange.com/questions/171999/overfull-hbox-in-biblatex
-% https://tex.stackexchange.com/questions/499457/why-my-document-is-not-hyphenation-on-words-starting-with-upper-case-letter-i
-\emergencystretch=5em
-
-% https://www.overleaf.com/learn/latex/Inserting_Images
-\graphicspath{{pictures/}}
-
-% https://tex.stackexchange.com/questions/23313/how-can-i-reduce-padding-after-figure
-% https://tex.stackexchange.com/questions/499580/how-to-keep-my-default-floating-environment-spacing-before-them-while-reducing
-% \xpretocmd{\figure}{\setlength{\belowcaptionskip}{-10pt}}{}{}
-
 % https://tex.stackexchange.com/questions/85113/xrightarrow-text
 \makeatletter
 \newcommand{\xRightarrow}[2][]{\ext@arrow 0359\Rightarrowfill@{#1}{#2}}
@@ -218,6 +212,14 @@ section=TITLE, % Título de seções em caixa alta
 
 % Disable the empty pages automatically put by memoir class, except the ones by \cleardoublepage
 \ifforcedinclude\openany\else\fi
+
+% https://tex.stackexchange.com/questions/171999/overfull-hbox-in-biblatex
+% https://tex.stackexchange.com/questions/499457/why-my-document-is-not-hyphenation-on-words-starting-with-upper-case-letter-i
+\emergencystretch=5em
+
+% https://tex.stackexchange.com/questions/23313/how-can-i-reduce-padding-after-figure
+% https://tex.stackexchange.com/questions/499580/how-to-keep-my-default-floating-environment-spacing-before-them-while-reducing
+% \xpretocmd{\figure}{\setlength{\belowcaptionskip}{-10pt}}{}{}
 
 
 \begin{document}
@@ -279,11 +281,13 @@ section=TITLE, % Título de seções em caixa alta
     % Referências bibliográficas
     \begingroup
         % https://tex.stackexchange.com/questions/163559/how-to-modify-line-spacing-per-entry-of-bibliography
-        % \linespread{1.18}\selectfont
+        % https://tex.stackexchange.com/questions/19105/how-can-i-put-more-space-between-bibliography-entries-biblatex
+        \setlength\bibitemsep{\baselineskip}
+        \advisor{}{\linespread{1.18}\selectfont}
 
-        % https://tex.stackexchange.com/questions/17128/using-bibtex-to-make-a-list-of-references-without
+        % https://tex.stackexchange.com/questions/17128/using-bibtex-to-make-a-list-of-references-without-having-citations-in-the-body
         % \nocite{*}
-        \printbibliography[title=REFERÊNCIAS]
+        \printbibliography[title=\lang{REFERENCES}{REFERÊNCIAS}]
     \endgroup
 
     % Glossário, consulte o manual da classe abntex2 para orientações sobre o glossário.
