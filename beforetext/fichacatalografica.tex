@@ -51,7 +51,7 @@ contidos.
                 ~/~\imprimirautor%
                 ;~\imprimirorientadorRotulo,~\imprimirorientador%
                 \ifnotempty{\imprimircoorientador}{;~\imprimircoorientadorRotulo,~\imprimircoorientador}%
-                ~--~\imprimirlocal,~\currenttime,~\imprimirdata.
+                ~--~\imprimirlocal,~\imprimirdata.
 
                 % Prints how much pages there are on the document and links to the last page
                 \hspace{0.5cm} \pageref{LastPage} p.
@@ -68,14 +68,14 @@ contidos.
                 % https://tex.stackexchange.com/questions/61811/how-to-define-inparaenum-in-the-preamble
                 \hspace{0.5cm}
                 \begin{inparaenum}
-                    \lang{\palavraschaveinglescomvirgula}{\palavraschaveportuguescomvirgula}
-                \end{inparaenum}
+                    \lang{\palavraschaveinglescomvirgula}{\palavraschaveportuguescomvirgula}%
+                \end{inparaenum}%
                 \begin{inparaenum}[I.]
                     \item \imprimirorientador~
                     \ifnotempty{\imprimircoorientador}{\item \imprimircoorientador~}
                     \item \imprimirprograma~
                     \item \imprimirtitulo~
-                \end{inparaenum}
+                \end{inparaenum}%
                 \bigskip
 
                 \hspace{7.75cm} CDU 02:141:005.7

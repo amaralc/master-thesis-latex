@@ -2,6 +2,17 @@
 
 % ELEMENTOS PRÉ-TEXTUAIS
 \ifforcedinclude\else
+    % Fix the \textpreliminarycontents not showing up when @twoside is disabled
+    \newif\ifufscThesisXisMemoirTwoSidesEnabled
+
+    % https://tex.stackexchange.com/questions/360785/how-do-i-check-if-a-document-is-oneside-or-twoside
+    \ifthenelse{\boolean{@twoside}}{%
+        \ufscThesisXisMemoirTwoSidesEnabledtrue%
+    }{%
+        \ufscThesisXisMemoirTwoSidesEnabledfalse%
+    }%
+    \setboolean{@twoside}{true}
+
     % pretextual settings
     % https://tex.stackexchange.com/questions/386446/how-to-fix-destination-with-the-same-identifier-namepage-a-has-been-already
     % https://tex.stackexchange.com/questions/67989/pdftex-warning-has-been-referenced-but-does-not-exist-replaced-by-a-fixed-one
@@ -26,11 +37,8 @@
         % Manually add the `\textpreliminarycontents` to the Table of Contents here
         % to keep the hyper link pointing to the beginning of the page, instead of
         % the beginning of `\textpreliminarycontents`
-
-        % When do I need to invoke \phantomsection?
         % https://tex.stackexchange.com/questions/44088/when-do-i-need-to-invoke-phantomsection
-        \phantomsection
-        \addcontentsline{toc}{chapter}{\mytextpreliminarylistname}
+        \phantomsection\addcontentsline{toc}{chapter}{\mytextpreliminarylistname}
 
         % https://tex.stackexchange.com/questions/234398/list-of-figures-and-tables-when-there-are-no-figures-or-tables
         \whenlistisnotempty{\mytextpreliminarylistname}{%
@@ -42,9 +50,17 @@
         \clearpage
     }
 
+    % Fix the \textpreliminarycontents not showing up when @twoside is disabled
+    \ifufscThesisXisMemoirTwoSidesEnabled
+        \setboolean{@twoside}{true}
+    \else
+        \setboolean{@twoside}{false}
+    \fi
+
     % Folha de rosto (o * indica que haverá a ficha bibliográfica)
-    \imprimirfolhaderosto*{}
+    % https://tex.stackexchange.com/questions/74439/table-of-contents-incorrect-page-numbering
     \addtotextpreliminarycontent{\folhaderostoname}
+    \imprimirfolhaderosto*{}
 
     % Inserir a ficha bibliografica
     %
@@ -56,21 +72,23 @@
     % o conteúdo de implementação deste arquivo pelo comando abaixo:
     \PRIVATEbookmarkthis{Ficha Catalográfica}
     \addtotextpreliminarycontent{Ficha Catalográfica}
-\fi
 
-\include{beforetext/fichacatalografica}
-\ifforcedinclude\else\cleardoublepage\fi
+    \include{beforetext/fichacatalografica}
+    % https://tex.stackexchange.com/questions/91440/how-to-include-multiple-pages-in-latex
+    % \includepdf{pictures/Ficha_Catalografica.pdf}
+    \ifforcedinclude\else\cleardoublepage\fi
+\fi
 
 
 % Inserir errata
 
 % Inserir folha de aprovação. Isto é um exemplo de Folha de aprovação, elemento obrigatório da
 % NBR 14724/2011 (seção 4.2.1.3). Você pode utilizar este modelo até a aprovação do trabalho.
-% Após isso, substitua todo o conteúdo deste arquivo por uma imagem da página assinada pela banca com o comando  abaixo:
-
+% Após isso, substitua todo o conteúdo deste arquivo por uma imagem da página assinada pela
+% banca com o comando abaixo:
 \ifforcedinclude\else\cleardoublepage\fi
 \include{beforetext/folhadeaprovacao}
-% \includepdf{folhadeaprovacao_final.pdf}
+% \includepdf{pictures/folhadeaprovacao_final.pdf}
 
 
 % Dedicatória
