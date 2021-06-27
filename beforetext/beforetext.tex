@@ -1,205 +1,198 @@
+% ---
+% Capa
+% ---
+\imprimircapa
+% ---
 
+% ---
+% Folha de rosto
+% (o * indica que haverá a ficha bibliográfica)
+% ---
+\imprimirfolhaderosto*
+% ---
 
-% ELEMENTOS PRÉ-TEXTUAIS
-\ifforcedinclude\else
-    % Fix the \textpreliminarycontents not showing up when @twoside is disabled
-    \newif\ifufscThesisXisMemoirTwoSidesEnabled
+% ---
+% Inserir a ficha bibliografica
+% ---
+% http://ficha.bu.ufsc.br/
+\begin{fichacatalografica}
+	\includepdf{beforetext/Ficha_Catalografica.pdf}
+\end{fichacatalografica}
+% ---
 
-    % https://tex.stackexchange.com/questions/360785/how-do-i-check-if-a-document-is-oneside-or-twoside
-    \ifthenelse{\boolean{@twoside}}{%
-        \ufscThesisXisMemoirTwoSidesEnabledtrue%
-    }{%
-        \ufscThesisXisMemoirTwoSidesEnabledfalse%
-    }%
-    \setboolean{@twoside}{true}
+% ---
+% Inserir folha de aprovação
+% ---
+\begin{folhadeaprovacao}
+	\OnehalfSpacing
+	\centering
+	\imprimirautor\\%
+	\vspace*{10pt}
+	\textbf{\imprimirtitulo}%
+	\ifnotempty{\imprimirsubtitulo}{:~\imprimirsubtitulo}\\%
+	%		\vspace*{31.5pt}%3\baselineskip
+	\vspace*{\baselineskip}
+	%\begin{minipage}{\textwidth}
+	O presente trabalho em nível de \imprimirnivel~foi avaliado e aprovado por banca examinadora composta pelos seguintes membros:\\
+	%\end{minipage}%
 
-    % pretextual settings
-    % https://tex.stackexchange.com/questions/386446/how-to-fix-destination-with-the-same-identifier-namepage-a-has-been-already
-    % https://tex.stackexchange.com/questions/67989/pdftex-warning-has-been-referenced-but-does-not-exist-replaced-by-a-fixed-one
-    \hypersetup{pageanchor=false}
-    \PRIVATEbookmarkthis{Capa}
-    \addtotextpreliminarycontent{Capa}
-    \pretextual
+	% \vspace*{\baselineskip}
+	% Prof.(a) xxxx, Dr(a).\\
+	% Instituição xxxx\\
 
-    % Capa
-    % \includepdf{pictures/FrenteCapaUFSC.pdf}
-    % https://tex.stackexchange.com/questions/227711/blank-page-after-titlingpage
-    \advisor{}{\AtBeginShipoutNext{\AtBeginShipoutNext{\AtBeginShipoutDiscard}}}
-    \imprimircapa
+	\vspace*{\baselineskip}
+	Prof. Carlos Henrique Ahrens, Dr(a).\\
+	Universidade Federal de Santa Catarina -- UFSC\\
 
-    % https://tex.stackexchange.com/questions/386446/how-to-fix-destination-with-the-same-identifier-namepage-a-has-been-already
-    % https://tex.stackexchange.com/questions/67989/pdftex-warning-has-been-referenced-but-does-not-exist-replaced-by-a-fixed-one
-    \hypersetup{pageanchor=true}
+	\vspace*{\baselineskip}
+	Prof. Neri Volpato, Dr(a).\\
+	Universidade Tecnológica Federal do Paraná -- UTFPR\\
 
-    % Custom list throw LaTeX Error: Command \mycustomfiction already defined?
-    % https://tex.stackexchange.com/questions/388489/custom-list-throw-latex-error-command-mycustomfiction-already-defined/
-    \advisor{}{%
-        % Manually add the `\textpreliminarycontents` to the Table of Contents here
-        % to keep the hyper link pointing to the beginning of the page, instead of
-        % the beginning of `\textpreliminarycontents`
-        % https://tex.stackexchange.com/questions/44088/when-do-i-need-to-invoke-phantomsection
-        \phantomsection\addcontentsline{toc}{chapter}{\mytextpreliminarylistname}
+	\vspace*{2\baselineskip}
+	\begin{minipage}{\textwidth}
+		Certificamos que esta é a \textbf{versão original e final} do trabalho de conclusão que foi julgado adequado para obtenção do título de \imprimirformacao.\\
+	\end{minipage}
+	%    \vspace{-0.7cm}
+	\vspace*{\fill}
+	\assinatura{\OnehalfSpacing Coordenação do Programa de Pós-Graduação}
+	\vspace*{\fill}
+	\assinatura{\OnehalfSpacing\imprimirorientador \\ \imprimirorientadorRotulo}
+	%	\ifnotempty{\imprimircoorientador}{
+	%	\assinatura{\imprimircoorientador \\ \imprimircoorientadorRotulo \\
+	%		\imprimirinstituicao~--~\imprimirinstituicaosigla}
+	%	}
+	% \newpage
+	\vspace*{\fill}
+	\imprimirlocal, \imprimirano.
+\end{folhadeaprovacao}
+% ---
 
-        % https://tex.stackexchange.com/questions/234398/list-of-figures-and-tables-when-there-are-no-figures-or-tables
-        \whenlistisnotempty{\mytextpreliminarylistname}{%
-            \begin{KeepFromToc}
-                \textpreliminarycontents
-            \end{KeepFromToc}
-        }
-
-        \clearpage
-    }
-
-    % Fix the \textpreliminarycontents not showing up when @twoside is disabled
-    \ifufscThesisXisMemoirTwoSidesEnabled
-        \setboolean{@twoside}{true}
-    \else
-        \setboolean{@twoside}{false}
-    \fi
-
-    % Folha de rosto (o * indica que haverá a ficha bibliográfica)
-    % https://tex.stackexchange.com/questions/74439/table-of-contents-incorrect-page-numbering
-    \addtotextpreliminarycontent{\folhaderostoname}
-    \imprimirfolhaderosto*{}
-
-    % Inserir a ficha bibliografica
-    %
-    % Isto é um exemplo de Ficha Catalográfica, ou ``Dados internacionais de
-    % catalogação-na-publicação''. Você pode utilizar este modelo como referência.
-    % Porém, provavelmente a biblioteca da sua universidade lhe fornecerá um PDF
-    % com a ficha catalográfica definitiva após a defesa do trabalho. Quando estiver
-    % com o documento, salve-o como PDF no diretório do seu projeto e substitua todo
-    % o conteúdo de implementação deste arquivo pelo comando abaixo:
-    \PRIVATEbookmarkthis{Ficha Catalográfica}
-    \addtotextpreliminarycontent{Ficha Catalográfica}
-
-    \include{beforetext/fichacatalografica}
-    % https://tex.stackexchange.com/questions/91440/how-to-include-multiple-pages-in-latex
-    % \includepdf{pictures/Ficha_Catalografica.pdf}
-    \ifforcedinclude\else\cleardoublepage\fi
-\fi
-
-
-% Inserir errata
-
-% Inserir folha de aprovação. Isto é um exemplo de Folha de aprovação, elemento obrigatório da
-% NBR 14724/2011 (seção 4.2.1.3). Você pode utilizar este modelo até a aprovação do trabalho.
-% Após isso, substitua todo o conteúdo deste arquivo por uma imagem da página assinada pela
-% banca com o comando abaixo:
-\ifforcedinclude\else\cleardoublepage\fi
-\include{beforetext/folhadeaprovacao}
-% \includepdf{pictures/folhadeaprovacao_final.pdf}
-
-
+% ---
 % Dedicatória
-\ifforcedinclude\else\cleardoublepage\fi
-\ifforcedinclude\else\input{beforetext/dedicatoria.tex}\fi
+% ---
+\begin{dedicatoria}
+	\vspace*{\fill}
+	\noindent
+	\begin{adjustwidth*}{}{5.5cm}
+		\raggedleft
+		Este trabalho é dedicado à minha avó Dulce Maria \\
+		e à minha mãe, Dulce A. Borges.
+	\end{adjustwidth*}
+\end{dedicatoria}
+% ---
 
+% ---
 % Agradecimentos
-\ifforcedinclude\else\cleardoublepage\fi
-\include{beforetext/agradecimentos}
+% ---
+\begin{agradecimentos}
+	Inserir os agradecimentos aos colaboradores à execução do trabalho.
 
+	Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.
+\end{agradecimentos}
+% ---
+
+% ---
 % Epígrafe
-\ifforcedinclude\else\cleardoublepage\fi
-\include{beforetext/epigrafe}
+% ---
+\begin{epigrafe}
+	\vspace*{\fill}
+	\begin{flushright}
+		\textit{``Texto da Epígrafe.\\
+			Citação relativa ao tema do trabalho.\\
+			É opcional. A epígrafe pode também aparecer\\
+			na abertura de cada seção ou capítulo.\\
+			Deve ser elaborada de acordo com a NBR 10520.''\\
+			(SOBRENOME do autor da epígrafe, ano)}
+	\end{flushright}
+\end{epigrafe}
+% ---
 
-
-% Ajusta o espaçamento dos parágrafos do resumo
-\setlength{\absparsep}{18pt}
-
+% ---
 % RESUMOS
-\ifforcedinclude\else\cleardoublepage\fi
-\include{beforetext/resumos}
+% ---
 
-% Some tables of contents
-\ifforcedinclude\else
-{
-    % https://tex.stackexchange.com/questions/179506/disable-colorlinks-locally-or-just-for-the-toc
-    \hypersetup{hidelinks}
+% resumo em português
+\setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
+\begin{resumo}
+	\SingleSpacing
+	No resumo são ressaltados o objetivo da pesquisa, o método utilizado, as discussões e os resultados com destaque apenas para os pontos principais. O resumo deve ser significativo, composto de uma sequência de frases concisas, afirmativas, e não de uma enumeração de tópicos. Não deve conter citações. Deve usar o verbo na voz ativa e na terceira pessoa do singular. O texto do resumo deve ser digitado, em um único bloco, sem espaço de parágrafo. O espaçamento entre linhas é simples e o tamanho da fonte é 12. Abaixo do resumo, informar as palavras-chave (palavras ou expressões significativas retiradas do texto) ou, termos retirados de thesaurus da área. Deve conter de 150 a 500 palavras. O resumo é elaborado de acordo com a NBR 6028.
 
-    % inserir lista de figuras
-    \ifforcedinclude\else\cleardoublepage\fi
-    % https://tex.stackexchange.com/questions/234398/list-of-figures-and-tables-when-there-are-no-figures-or-tables
-    \whenlistisnotempty{\listfigurename}{%
-        \addtotextpreliminarycontent{\listfigurename}
-        % https://tex.stackexchange.com/questions/121879/remove-spacing-between-per-chapter-figures-in-lof
-        {\renewcommand{\addvspace}[1]{}
-        \listoffigures*}
-    }{\pdfbookmark[0]{\listfigurename}{lof}}
+	\textbf{Palavras-chave}: Palavra-chave 1. Palavra-chave 2. Palavra-chave 3.
+\end{resumo}
 
-    % inserir lista de quadros
-    \ifforcedinclude\else\cleardoublepage\fi
-    % https://tex.stackexchange.com/questions/234398/list-of-figures-and-tables-when-there-are-no-figures-or-tables
-    \whenlistisnotempty{\listofquadrosname}{%
-        \addtotextpreliminarycontent{\listofquadrosname}
-        % https://tex.stackexchange.com/questions/121879/remove-spacing-between-per-chapter-figures-in-lof
-        {\renewcommand{\addvspace}[1]{}
-        \listofquadros*}
-    }{\pdfbookmark[0]{\listofquadrosname}{loq}}
+% resumo em inglês
+\begin{resumo}[Abstract]
+	\SingleSpacing
+	\begin{otherlanguage*}{english}
+		Resumo traduzido para outros idiomas, neste caso, inglês. Segue o formato do resumo feito na língua vernácula. As palavras-chave traduzidas, versão em língua estrangeira, são colocadas abaixo do texto precedidas pela expressão “Keywords”, separadas por ponto.
 
-    % inserir lista de tabelas
-    \ifforcedinclude\else\cleardoublepage\fi
-    % https://tex.stackexchange.com/questions/234398/list-of-figures-and-tables-when-there-are-no-figures-or-tables
-    \whenlistisnotempty{\listtablename}{%
-        \addtotextpreliminarycontent{\listtablename}
-        % https://tex.stackexchange.com/questions/121879/remove-spacing-between-per-chapter-figures-in-lof
-        {\renewcommand{\addvspace}[1]{}
-        \listoftables*}
-    }{\pdfbookmark[0]{\listtablename}{lot}}
+		\textbf{Keywords}: Keyword 1. Keyword 2. Keyword 3.
+	\end{otherlanguage*}
+\end{resumo}
 
-    % inserir códigos fonte (List of Listings `lol`)
-    % https://tex.stackexchange.com/questions/511519/latex-keeps-showing-minted-environment-as-figures-instead-of-listening/511579#511579
-    \ifforcedinclude\else\cleardoublepage\fi
-    % https://tex.stackexchange.com/questions/234398/list-of-figures-and-tables-when-there-are-no-figures-or-tables
-    \whenlistisnotempty{\lstlistlistingname}{%
-        \addtotextpreliminarycontent{\lstlistlistingname}
-        % https://tex.stackexchange.com/questions/121879/remove-spacing-between-per-chapter-figures-in-lof
-        {\renewcommand{\addvspace}[1]{}
-        \lstlistoflistings*}
-    }{\pdfbookmark[0]{\lstlistlistingname}{lol}}
-}
-\fi
+%% resumo em francês 
+%\begin{resumo}[Résumé]
+% \begin{otherlanguage*}{french}
+%    Il s'agit d'un résumé en français.
+% 
+%   \textbf{Mots-clés}: latex. abntex. publication de textes.
+% \end{otherlanguage*}
+%\end{resumo}
+%
+%% resumo em espanhol
+%\begin{resumo}[Resumen]
+% \begin{otherlanguage*}{spanish}
+%   Este es el resumen en español.
+%  
+%   \textbf{Palabras clave}: latex. abntex. publicación de textos.
+% \end{otherlanguage*}
+%\end{resumo}
+%% ---
 
+{%hidelinks
+\hypersetup{hidelinks}
+% ---
+% inserir lista de ilustrações
+% ---
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures*
+\cleardoublepage
+% ---
 
-% inserir lista de abreviaturas e siglas
-\ifforcedinclude\else\cleardoublepage\fi
-\include{beforetext/siglas}
+% ---
+% inserir lista de quadros
+% ---
+\pdfbookmark[0]{\listofquadrosname}{loq}
+\listofquadros*
+\cleardoublepage
+% ---
 
-% Inserir lista de símbolos
-\ifforcedinclude\else\cleardoublepage\fi
-\include{beforetext/simbolos}
+% ---
+% inserir lista de tabelas
+% ---
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage
+% ---
 
-% How to remove the self-reference of the ToC from the ToC?
-% https://tex.stackexchange.com/questions/10943/how-to-remove-the-self-reference-of-the-toc-from-the-toc
-\ifforcedinclude\else\cleardoublepage\fi
+% ---
+% inserir lista de abreviaturas e siglas (devem ser declarados no preambulo)
+% ---
+\imprimirlistadesiglas
+% ---
 
-\begin{KeepFromToc}
-    % https://tex.stackexchange.com/questions/35/what-does-overfull-hbox-mean
-    % https://tex.stackexchange.com/questions/59122/how-to-avoid-using-sloppy-document-wide-to-fix-overfull-hbox-problems
-    % https://tex.stackexchange.com/questions/257007/adding-color-to-table-of-contents-and-section-headings
-    {
-        % https://tex.stackexchange.com/questions/179506/disable-colorlinks-locally-or-just-for-the-toc
-        \hypersetup{hidelinks}
+% ---
+% inserir lista de símbolos (devem ser declarados no preambulo)
+% ---
+\imprimirlistadesimbolos
+% ---
 
-        % https://tex.stackexchange.com/questions/65711/underfull-vbox-badness-10000-with-memoir
-        \raggedbottom
+% ---
+% inserir o sumario
+% ---
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
 
-        % https://tex.stackexchange.com/questions/49887/overfull-hbox-warning-for-toc-entries-when-using-memoir-documentclass
-        % \makeatletter
-            % \renewcommand{\@pnumwidth}{2em}
-            % \renewcommand{\@tocrmarg}{3em}
-        % \makeatother
-
-        % https://tex.stackexchange.com/questions/57544/memoir-mysterious-overfull-hbox-in-toc-when-mathptmx-is-used
-        % \setlength{\cftchapternumwidth}{2.25em}
-
-        % Add the table of contents to the brief table of contents
-        % https://tex.stackexchange.com/questions/234398/list-of-figures-and-tables-when-there-are-no-figures-or-tables
-        \whenlistisnotempty{\contentsname}{%
-            \addtotextpreliminarycontent{\contentsname}
-            \tableofcontents
-        }{\pdfbookmark[0]{\contentsname}{toc}}
-    }
-
-\end{KeepFromToc}
-
+}%hidelinks
+% ---
