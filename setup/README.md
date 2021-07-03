@@ -11,11 +11,11 @@ Esse projeto não está vinculado a nenhum órgão da UFSC.
 Qualquer problema com a utilização ou com o modelo em si,
 basta criar um issue aqui no GitHub no nosso issue tracker: [issues](../../issues)
 
-
 ### Utilizando `git`
 
 No diretório do seu projeto faça um clone (recursivo) dos arquivos do repositório,
 em uma pasta chamada `setup` dentro do template da sua tese:
+
 ```bash
 git clone --recursive https://github.com/ufsc/ufscthesisx-setup setup
 ```
@@ -23,6 +23,7 @@ git clone --recursive https://github.com/ufsc/ufscthesisx-setup setup
 Para usá-lo,
 você deve utilizar a classe `setup/ufscthesisx` como classe do seu documento,
 e então incluir onde está são os arquivos de sua bibliografia:
+
 ```latex
 % Uncomment the following line if you want to use other biblatex settings
 % \PassOptionsToPackage{style=numeric,repeatfields=true,backend=biber,backref=true,citecounter=true}{biblatex}
@@ -40,26 +41,26 @@ section=TITLE, % Título de seções em caixa alta
 \addbibresource{aftertext/references.bib}
 ```
 
-Uma maneira  de utilizar esse **template**,
+Uma maneira de utilizar esse **template**,
 caso você seja usuário de `git`,
 é fazer o clone desse repositório como um submodulo de sua tese,
 e em seu arquivo principal incluir o seguinte cabeçalho para carregar os pacotes básicos mencionados acima.
-
 
 ### Mudanças
 
 Para ver as mudanças, acesse o histórico do `git` no endereço [commits/master](../../commits/master).
 
 Ou clone este repositório e execute seguinte comando do cliente git:
+
 ```bash
 # https://git-scm.com/book/en/v2/Git-Basics-Viewing-the-Commit-History
 git log
 ```
 
-
 ## Compilação
 
 O jeito mais legal de compilar é executando um dos seguintes comandos:
+
 1. **`make clean`**
 1. **`make clean halt=1 debug=1`**
 1. **`make latex biber latex1`**
@@ -70,6 +71,7 @@ O jeito mais legal de compilar é executando um dos seguintes comandos:
 
 Se você quiser saber quais são todos os comandos de compilação disponíveis,
 basta chamar utilizar o comando `make help`. Exemplo:
+
 ```
 $ make help
 
@@ -100,7 +102,6 @@ você também pode chamar `make latex debug=1` qualquer outra coisa desde que n�
 Você também pode diretamente editar o arquivo `setup/makefile.mk` e
 descomentar a linha `# ENABLE_DEBUG_MODE := true` para ativar o modo debug permanentemente.
 
-
 ## Licença
 
 ```
@@ -118,7 +119,7 @@ quem o Software seja fornecido tenham estes mesmos direitos, ambos sujeitos às 
 O aviso de direitos autorais acima e este aviso de permissão devem ser incluídos em todas as cópias
 ou partes substanciais do Software.
 
-Os arquivos `chapters/intro.tex`, `chapters/chapter_1.tex` e `setup/ufscthesisx.sty` estão
+Os arquivos `chapters/intro.tex`, `chapters/chapter_01.tex` e `setup/ufscthesisx.sty` estão
 licenciados sobre a licença LPPL (The Latex Project License). Portanto você deve respeitar essa
 licença para esses arquivos ao invés dessa. Entretanto a condição a seguir continuará valendo sobre
 esses arquivos licenciados pela licença LPPL:
@@ -130,4 +131,3 @@ AUTORES OU TITULARES DE DIREITOS AUTORAIS SERÃO RESPONSÁVEIS POR QUALQUER RECL
 RESPONSABILIDADE, SEJA EM AÇÃO DE CONTRATO, DELITO OU DE OUTRA FORMA, DECORRENTE, DESTE OU
 RELACIONADO COM DOS ARQUIVOS DESTE REPOSITÓRIO OU O USO OU OUTRAS NEGOCIAÇÕES NO MODELO E SOFTWARE.
 ```
-
