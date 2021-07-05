@@ -900,7 +900,18 @@
 % 5. `programming.tex`
 % 6. `badboxes.tex`
 
+% Crop an inserted image
+% https://tex.stackexchange.com/questions/57418/crop-an-inserted-image
+\usepackage{graphicx}
 
+
+% Use subfigures
+% https://tex.stackexchange.com/questions/165728/latex-figure-numbering-as-part-a-b-c
+\usepackage{subcaption}
+
+% Access image dimensions
+% https://tex.stackexchange.com/questions/57418/crop-an-inserted-image
+\usepackage[export]{adjustbox}
 
 % Please tutor the usage of patchcmd and xpatch
 % https://tex.stackexchange.com/questions/152773/please-tutor-the-usage-of-patchcmd-and-xpatch
